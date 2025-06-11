@@ -24,9 +24,9 @@ register_activation_hook( __FILE__, 'scud_add_user_role' );
  * Fires only on the activation hook, so the role is only registered once
  */
 function scud_add_user_role() {
-    $role_slug = 'sales_rep';
+    $role_slug = 'simple_user';
 
-    $role_display_name = 'Sales Representative';
+    $role_display_name = 'Simple User';
 
     $capabilities = [
         'read'         => true,
