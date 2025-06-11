@@ -15,3 +15,24 @@ Domain Path: /languages
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 define( 'SCUD_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+
+// Register the new User Role
+register_activation_hook( __FILE__, 'scud_add_user_role' );
+
+/**
+ * Register the custom user role
+ * Fires only on the activation hook, so the role is only registered once
+ */
+function scud_add_user_role() {
+    $role_slug = 'sales_rep';
+
+    $role_display_name = 'Sales Representative';
+
+    $capabilities = [
+        'read'         => true,
+        'edit_posts'   => true,
+        'delete_posts' => true,
+    ];
+
+    add_role( $role_slug, $role_display_name, $capabilities );
+}
