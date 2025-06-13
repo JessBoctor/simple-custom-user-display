@@ -27,7 +27,7 @@ register_activation_hook( __FILE__, 'scud_add_user_role' );
  * @param none
  * @return void
  */
-function scud_add_user_role() {
+function scud_add_user_role(): void {
     // A string with no spaces to act as a slug or internal reference to the role tupe
     $role_slug = 'simple_user';
 
@@ -52,9 +52,9 @@ add_action( 'edit_user_profile', 'scud_display_user_profile_fields' );
  * Retrieve and display the user title field
  *
  * @param WP_User $user The user to show in the admin editor
- * @return string The HTML code to disply the user field
+ * @return void The HTML code to disply the user field
  */
-function scud_display_user_profile_fields( WP_User $user ) {
+function scud_display_user_profile_fields( WP_User $user ): void {
     // Before we display the profile fields, retrieve the fields from the WP_User object
     $saved_title = $user->get( 'scud_user_title' );
 
