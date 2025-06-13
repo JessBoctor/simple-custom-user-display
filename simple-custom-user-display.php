@@ -65,7 +65,7 @@ function scud_display_user_profile_fields( WP_User $user ) {
             . '<tr>'
                 . '<th><label for="scud_user_title">' . _e( 'Title' ) . '</label></th>'
                 . '<td>'
-                    . '<input type="text" name="scud_user_title" id="scud_user_title" value="' . esc_attr( $saved_title ) . '" />'
+                    . '<input type="text" name="scud_user_title" id="scud_user_title" value="' . esc_attr( $saved_title )  ?? '' . '" />'
                 . '</td>'
             . '</tr>'
         . '</table>';
