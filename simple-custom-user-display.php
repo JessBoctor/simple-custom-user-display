@@ -58,18 +58,18 @@ function scud_display_user_profile_fields( WP_User $user ): void {
     // Before we display the profile fields, retrieve the fields from the WP_User object
     $saved_title = $user->get( 'scud_user_title' );
 
-    // Create the HTML string
-    // Heredoc would be preferred here, but I am not sure it works with translation functions
-    $html = '<h3>' . _e( 'Additional information' ) . '</h3>'
-        . '<table class="form-table">'
-            . '<tr>'
-                . '<th><label for="scud_user_title">' . _e( 'Title' ) . '</label></th>'
-                . '<td>'
-                    . '<input type="text" name="scud_user_title" id="scud_user_title" value="' . esc_attr( $saved_title )  ?? '' . '" />'
-                . '</td>'
-            . '</tr>'
-        . '</table>';
+    // For some reason, the action hooks expect the HTML code directly and won't render a string of HTML code
+    // It would be cleaner to return the HTML string, but this type of templating works too
+    ?>
+    <h3><?php _e('Additional information'); ?></h3>
 
-    // Return the HTML code
-    return $html;
+    <table class="form-table">
+        <tr>
+            <th><label for="scud_user_title"><?php _e( 'Title' ); ?></label></th>
+            <td>
+                <input type="text" name="scud_user_title" id="scud_user_title" value="<?php echo esc_attr( $saved_title ); ?>" />
+            </td>
+        </tr>
+    </table>
+  <?php
 }
