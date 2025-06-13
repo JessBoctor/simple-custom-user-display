@@ -43,3 +43,33 @@ function scud_add_user_role() {
 
     add_role( $role_slug, $role_display_name, $capabilities );
 }
+
+// Add custom meta fields to the "edit user" admin screen
+add_action( 'show_user_profile', 'scud_display_user_profile_fields' );
+add_action( 'edit_user_profile', 'scud_display_user_profile_fields' );
+
+/**
+ * Retrieve and display the user title field
+ *
+ * @param WP_User $user The user to show in the admin editor
+ * @return string The HTML code to disply the user field
+ */
+function scud_display_user_profile_fields( WP_User $user ) {
+    // Before we display the profile fields, retrieve the fields from the WP_User object
+    $saved_title = $user->get( 'scud_user_title' );
+
+    // Create the HTML string
+    // Heredoc would be preferred here, but I am not sure it works with translation functions
+    $html = '<h3>' . _e( 'Additional information' ) . '</h3>'
+        . '<table class="form-table">'
+            . '<tr>'
+                . '<th><label for="scud_user_title">' . _e( 'Title' ) . '</label></th>'
+                . '<td>'
+                    . '<input type="text" name="scud_user_title" id="scud_user_title" value="' . esc_attr( $saved_title ) . '" />'
+                . '</td>'
+            . '</tr>'
+        . '</table>';
+
+    // Return the HTML code
+    return $html;
+}
