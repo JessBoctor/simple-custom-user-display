@@ -35,7 +35,7 @@ function scud_activation(): void {
 }
 
 // Initialize custom user profile fields and meta
-add_action( 'admin_init', 'scud_load_user_role_meta' );
+add_action( 'current_screen', 'scud_load_user_role_meta' );
 
 /**
  * Conditionally load user meta fields based on the screen
