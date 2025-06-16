@@ -2,13 +2,20 @@
 /**
 * Create a new user role with custom meta and taxonomy
 */
-class Scud_User_Role {
+class Scud_User {
 
     // A string with no spaces to act as a slug or internal reference to the role tupe
     private string $role_slug = 'simple_user';
 
     // A string which is displayed to admin screens
     private string $role_display_name = 'Simple User';
+
+     // WordPress Capabilities are listed here: https://wordpress.org/documentation/article/roles-and-capabilities/#capabilities
+    private array $capabilities = [
+        'read'         => true,
+        'edit_posts'   => true,
+        'delete_posts' => true,
+    ];
 
     /**
      * Register the custom user role
@@ -18,21 +25,8 @@ class Scud_User_Role {
      * @param none
      * @return void
      */
-    function scud_add_user_role(): void {
-        // A string with no spaces to act as a slug or internal reference to the role tupe
-        $role_slug = 'simple_user';
-
-        // A string which is displayed to admin screens
-        $role_display_name = 'Simple User';
-
-        // WordPress Capabilities are listed here: https://wordpress.org/documentation/article/roles-and-capabilities/#capabilities
-        $capabilities = [
-            'read'         => true,
-            'edit_posts'   => true,
-            'delete_posts' => true,
-        ];
-
-        add_role( $this->role_slug, $this->role_display_name, $capabilities );
+    public function add_user_role(): void {
+        add_role( $this->role_slug, $this->role_display_name, $this->capabilities );
     }
 
     // Add custom meta fields to the "edit user" admin screen

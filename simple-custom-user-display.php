@@ -30,6 +30,6 @@ register_activation_hook( __FILE__, 'scud_activation' );
 function scud_activation(): void {
 
     // Add the new user role
-    $user_role = new Scud_User_Role();
-    $user_role->scud_add_user_role();
+    $scud_user = new Scud_User();
+    $scud_user->add_user_role();
 }
