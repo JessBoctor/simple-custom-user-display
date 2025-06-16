@@ -29,9 +29,23 @@ class Scud_User {
         add_role( $this->role_slug, $this->role_display_name, $this->capabilities );
     }
 
-    // Add custom meta fields to the "edit user" admin screen
-    add_action( 'show_user_profile', 'scud_display_user_profile_fields' );
-    add_action( 'edit_user_profile', 'scud_display_user_profile_fields' );
+    /**
+     * Run the action hooks when a user profile is loaded
+     *
+     * @param none;
+     * @return void;
+     */
+    public function user_profile_hooks(): void {
+
+        // Add custom meta fields to the "edit user" admin screen
+        add_action( 'show_user_profile', array( $this, 'display_user_profile_fields' ) );
+        add_action( 'edit_user_profile', array( $this, 'display_user_profile_fields' ) );
+
+        // Save custom meta field values on profile update
+        add_action( 'personal_options_update', array( $this, 'save_user_profile_fields' ) );
+        add_action( 'edit_user_profile_update', array( $this, 'scud_save_user_profile_fields' ) );
+
+    }
 
     /**
      * Retrieve and display the user title field
@@ -39,7 +53,7 @@ class Scud_User {
      * @param WP_User $user The user to show in the admin editor
      * @return void The HTML code to disply the user field
      */
-    function scud_display_user_profile_fields( WP_User $user ): void {
+    public function display_user_profile_fields( WP_User $user ): void {
         // Before we display the profile fields, retrieve the fields from the WP_User object
         $saved_title = $user->get( 'scud_user_title' );
 
@@ -59,17 +73,13 @@ class Scud_User {
     <?php
     }
 
-    // Save custom meta field values on profile update
-    add_action( 'personal_options_update', 'scud_save_user_profile_fields' );
-    add_action( 'edit_user_profile_update', 'scud_save_user_profile_fields' );
-
     /**
      * Save the user profile fields
      *
      * @param string $user_id The ID of the user being saved
      * @return void;
      */
-    function scud_save_user_profile_fields( $user_id ) {
+    public function save_user_profile_fields( $user_id ) {
     if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'update-user_' . $user_id ) ) {
         return;
     }

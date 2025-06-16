@@ -33,3 +33,32 @@ function scud_activation(): void {
     $scud_user = new Scud_User();
     $scud_user->add_user_role();
 }
+
+// Initialize custom user profile fields and meta
+add_action( 'admin_init', 'scud_load_user_role_meta' );
+
+/**
+ * Conditionally load user meta fields based on the screen
+ *
+ * @param none;
+ * @return void;
+ */
+function scud_load_user_role_meta(): void {
+    $scud_user = new Scud_User();
+    $screen = get_current_screen();
+
+    if ( ! $screen ) {
+        return;
+    }
+
+    switch ( $screen->id ) {
+        case 'users':
+        case 'user':
+        case 'profile':
+        case 'user-edit':
+            $scud_user->user_profile_hooks();
+            break;
+        default:
+            break;
+        }
+}
