@@ -4,13 +4,20 @@
 */
 class Scud_User {
 
-    // A string with no spaces to act as a slug or internal reference to the role tupe
+    /**
+     * A string with no spaces to act as a slug or internal reference to the role tupe
+     */
     private string $role_slug = 'simple_user';
 
-    // A string which is displayed to admin screens
+    /**
+     * A string which is displayed to admin screens
+     */
     private string $role_display_name = 'Simple User';
 
-     // WordPress Capabilities are listed here: https://wordpress.org/documentation/article/roles-and-capabilities/#capabilities
+    /**
+     * The capabilities that the user should have e.g. the ability to create posts or make theme changes
+     * WordPress Capabilities are listed here: https://wordpress.org/documentation/article/roles-and-capabilities/#capabilities
+     */
     private array $capabilities = [
         'read'         => true,
         'edit_posts'   => true,
