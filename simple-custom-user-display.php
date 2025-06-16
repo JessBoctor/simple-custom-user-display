@@ -73,3 +73,25 @@ function scud_display_user_profile_fields( WP_User $user ): void {
     </table>
   <?php
 }
+
+// Save custom meta field values on profile update
+add_action( 'personal_options_update', 'scud_save_user_profile_fields' );
+add_action( 'edit_user_profile_update', 'scud_save_user_profile_fields' );
+
+/**
+ * Save the user profile fields
+ *
+ * @param string $user_id The ID of the user being saved
+ * @return void;
+ */
+function scud_save_user_profile_fields( $user_id ) {
+  if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'update-user_' . $user_id ) ) {
+    return;
+  }
+
+  if ( !current_user_can( 'edit_user', $user_id ) ) {
+    return;
+  }
+
+  update_user_meta( $user_id, 'title', $_POST['title'] );
+}
