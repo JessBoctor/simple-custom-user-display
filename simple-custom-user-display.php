@@ -14,7 +14,9 @@ Domain Path: /languages
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-define( 'SCUD_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+define( 'SCUD_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
+
+require_once SCUD_PLUGIN_DIR . 'class.scud-user-role.php';
 
 // Register the new User Role
 register_activation_hook( __FILE__, 'scud_activation' );
