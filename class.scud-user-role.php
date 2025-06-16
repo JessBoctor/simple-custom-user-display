@@ -43,7 +43,7 @@ class Scud_User {
 
         // Save custom meta field values on profile update
         add_action( 'personal_options_update', array( $this, 'save_user_profile_fields' ) );
-        add_action( 'edit_user_profile_update', array( $this, 'scud_save_user_profile_fields' ) );
+        add_action( 'edit_user_profile_update', array( $this, 'save_user_profile_fields' ) );
 
     }
 
@@ -79,7 +79,7 @@ class Scud_User {
      * @param string $user_id The ID of the user being saved
      * @return void;
      */
-    public function save_user_profile_fields( $user_id ) {
+    public function save_user_profile_fields( string $user_id ): void {
     if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'update-user_' . $user_id ) ) {
         return;
     }
@@ -88,6 +88,6 @@ class Scud_User {
         return;
     }
 
-    update_user_meta( $user_id, 'title', $_POST['title'] );
+    update_user_meta( $user_id, 'scud_user_title', $_POST['scud_user_title'] );
     }
 }
