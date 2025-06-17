@@ -74,6 +74,11 @@ class Scud_User {
      */
     public function display_user_profile_fields( WP_User $user ): void {
 
+        // Avoid displaying the custom meta fields for other user roles
+        if ( ! in_array( $this->role_slug, $user->roles ) ) {
+            return;
+        }
+
         // For some reason, the action hooks expect the HTML code directly and won't render a string of HTML code
         // It would be cleaner to return the HTML string, but this type of templating works too
         ?>
