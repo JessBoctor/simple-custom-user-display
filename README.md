@@ -19,7 +19,7 @@ You can read more about the context here: https://jessboctor.com/2025/06/12/maki
 # The to-do list
 - [x] Create custom user roles
 - [x] Create custom user profile fields
-- [ ] Make it possible to save the user metadata
+- [x] Make it possible to save the user metadata
 - [ ] Create custom user taxonomies
 - [ ] Query the user tables for the group member data
 - [ ] Display the user information in a DataView list

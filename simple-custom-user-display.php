@@ -14,4 +14,51 @@ Domain Path: /languages
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-define( 'SCUD_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+define( 'SCUD_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
+
+require_once SCUD_PLUGIN_DIR . 'class.scud-user-role.php';
+
+// Register the new User Role
+register_activation_hook( __FILE__, 'scud_activation' );
+
+/**
+ * Execute set up tasks on plugin activation
+ *
+ * @param none;
+ * @return void;
+ */
+function scud_activation(): void {
+
+    // Add the new user role
+    $scud_user = new Scud_User();
+    $scud_user->add_user_role();
+}
+
+// Initialize custom user profile fields and meta
+add_action( 'current_screen', 'scud_load_user_role_meta' );
+
+/**
+ * Conditionally load user meta fields based on the screen
+ *
+ * @param none;
+ * @return void;
+ */
+function scud_load_user_role_meta(): void {
+    $scud_user = new Scud_User();
+    $screen = get_current_screen();
+
+    if ( ! $screen ) {
+        return;
+    }
+
+    switch ( $screen->id ) {
+        case 'users':
+        case 'user':
+        case 'profile':
+        case 'user-edit':
+            $scud_user->user_profile_hooks();
+            break;
+        default:
+            break;
+        }
+}
