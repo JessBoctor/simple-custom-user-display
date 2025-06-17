@@ -64,10 +64,12 @@ class Scud_User {
         // Add custom meta fields to the "edit user" admin screen
         add_action( 'show_user_profile', array( $this, 'display_user_profile_fields' ) );
         add_action( 'edit_user_profile', array( $this, 'display_user_profile_fields' ) );
+        add_action( 'user_new_form', array( $this, 'display_user_profile_fields' ) );
 
         // Save custom meta field values on profile update
         add_action( 'personal_options_update', array( $this, 'save_user_profile_fields' ) );
         add_action( 'edit_user_profile_update', array( $this, 'save_user_profile_fields' ) );
+        add_action( 'user_register', array( $this, 'save_user_profile_fields' ) );
 
     }
 
