@@ -25,6 +25,11 @@ class Scud_User {
     ];
 
     /**
+     * A string describing the group of meta fields assigned to this role
+     */
+    private string $meta_fields_heading = 'Additional Information';
+
+    /**
      * An array containing the slug and label for meta-data fields which should be saved to these types of user
      * The slug and label should be saved as key => value pairs:
      * [
@@ -82,7 +87,7 @@ class Scud_User {
         // For some reason, the action hooks expect the HTML code directly and won't render a string of HTML code
         // It would be cleaner to return the HTML string, but this type of templating works too
         ?>
-        <h3><?php _e('Additional information'); ?></h3>
+        <h3><?php echo $this->meta_fields_heading; ?></h3>
 
         <table class="form-table">
             <?php foreach ( $this->meta_fields as $field_slug => $field_label ):
