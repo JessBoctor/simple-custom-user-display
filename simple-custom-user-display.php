@@ -79,11 +79,9 @@ add_action( 'init', 'scud_load_user_groups' );
 
 // Load the taxonomies in the admin menu
 function scud_load_user_groups() {
-    $scud_groups = new Scud_Groups();
-
     // Register taxonomies
-    $scud_groups->register_taxonomies();
+    Scud_Groups::register_taxonomies();
 
     // Load admin screens
-    $scud_groups->add_user_groups_to_menu();
+    Scud_Groups::add_user_groups_to_menu();
 }

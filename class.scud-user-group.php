@@ -16,7 +16,7 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
          *
          * All available taxonomy parameters can be found here: https://developer.wordpress.org/reference/functions/register_taxonomy/
          */
-        public function register_taxonomies() {
+        public static function register_taxonomies() {
 
             // Group 1
             register_taxonomy(
@@ -67,7 +67,7 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
          * @param none
          * @return void
          */
-        public function add_user_groups_to_menu(): void {
+        public static function add_user_groups_to_menu(): void {
             add_submenu_page( 'users.php', 'User Group One', 'First User Groups', 'edit_users', 'edit-tags.php?taxonomy=group_1' );
             add_submenu_page( 'users.php', 'User Group Two', 'Second User Groups', 'edit_users', 'edit-tags.php?taxonomy=group_2' );
         }
