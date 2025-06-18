@@ -69,6 +69,10 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
             add_submenu_page( 'users.php', 'User Group Two', 'Second User Groups', 'edit_users', 'edit-tags.php?taxonomy=group_2' );
         }
 
+        // Deep thanks to Justin Tadlock and his user-tags plugin for this next bit
+        // https://wordpress.org/plugins/user-tags/
+        // https://justintadlock.com/archives/2011/10/20/custom-user-taxonomies-in-wordpress
+
         /**
          * Update user taxonomies in the profile page
          */
