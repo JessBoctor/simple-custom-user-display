@@ -13,7 +13,7 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
          *
          * All available taxonomy parameters can be found here: https://developer.wordpress.org/reference/functions/register_taxonomy/
          */
-        public static function register_taxonomies() {
+        public function register_taxonomies() {
 
             // Group 1
             register_taxonomy(
