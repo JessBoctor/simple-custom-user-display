@@ -151,9 +151,35 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
 
         /**
          * Update terms saved to a user on profile update
+         *
+         * @param string $user_id The ID of the user being saved
+         * @return void;
          */
-        public function save_user_taxonomy_terms(): void {
-            return;
+        public function save_user_taxonomy_terms( string $user_id ): void {
+            // Check this save is being called from the correct admin screen and nonce
+            check_admin_referer( 'update-user_' . $user_id );
+
+			// Check if the current user can edit this user.
+			if ( empty( $_POST['tax_input'] ) || ! current_user_can( 'edit_user', $user_id ) ) {
+				return;
+			}
+
+			//phpcs:ignore
+			$input_tags = wp_unslash( $_POST['tax_input'] );
+            // The structure of the taxonomy data here is taxonomy_slug => array of terms
+			foreach ( $input_tags as $taxonomy => $taxonomy_terms ) {
+
+				$taxonomy       = sanitize_key( $taxonomy );
+				$taxonomy_terms = array_map( 'absint', $taxonomy_terms );
+
+				// Save the data.
+				if ( ! empty( $taxonomy_terms ) ) :
+					wp_set_object_terms( $user_id, $taxonomy_terms, $taxonomy, false );
+				else :
+					// No terms left, delete all terms.
+					wp_set_object_terms( $user_id, array(), $taxonomy, false );
+				endif;
+			}
         }
 
         /**
