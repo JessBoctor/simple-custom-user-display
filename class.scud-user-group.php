@@ -74,15 +74,15 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
          */
         public function user_profile_hooks() {
             // Show on User Profiles.
-            add_action( 'show_user_profile', array( $this, 'user_profile' ) );
-            add_action( 'edit_user_profile', array( $this, 'user_profile' ) );
+            add_action( 'show_user_profile', array( $this, 'display_user_taxonomy_fields' ) );
+            add_action( 'edit_user_profile', array( $this, 'display_user_taxonomy_fields' ) );
 
             // Update on Save
-            add_action( 'personal_options_update', array( $this, 'save_taxonomy_terms' ) );
-            add_action( 'edit_user_profile_update', array( $this, 'save_taxonomy_terms' ) );
+            add_action( 'personal_options_update', array( $this, 'save_user_taxonomy_terms' ) );
+            add_action( 'edit_user_profile_update', array( $this, 'save_user_taxonomy_terms' ) );
 
             // Clear up related tags and taxonomies, when a user is deleted.
-            add_action( 'deleted_user', array( $this, 'update_user_list' ) );
+            add_action( 'deleted_user', array( $this, 'update_user_assigned_to_terms' ) );
         }
     }
 }
