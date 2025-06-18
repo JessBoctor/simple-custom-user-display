@@ -91,7 +91,7 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
             add_action( 'user_register', array( $this, 'save_user_taxonomy_terms' ) );
 
             // Clear up related tags and taxonomies, when a user is deleted.
-            add_action( 'deleted_user', array( $this, 'update_user_assigned_to_terms' ) );
+            add_action( 'deleted_user', array( $this, 'remove_user_from_terms_list' ) );
         }
 
         /**
@@ -184,9 +184,20 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
 
         /**
          * Clear up related tags and taxonomies when a user is deleted
+         *
+         * @param string $user_id The id of the user being deleted
+         * @return void
          */
-        public function update_user_assigned_to_terms(): void {
-            return;
+        public function remove_user_from_terms_list( string $user_id ): void {
+            $taxonomies    = get_object_taxonomies( 'user', 'object' );
+			$taxonomy_list = array();
+			foreach ( $taxonomies as $key => $taxonomy ) {
+				$taxonomy_list[] = $key;
+			}
+			// Delete the relation for a user.
+			if ( ! empty( $taxonomy_list ) && is_array( $taxonomy_list ) ) {
+				wp_delete_object_term_relationships( $user_id, $taxonomy_list );
+			}
         }
     }
 }
