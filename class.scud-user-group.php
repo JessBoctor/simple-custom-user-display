@@ -1,7 +1,7 @@
 <?php
 namespace SCUD;
 
-use Scud_User;
+use SCUD\Scud_User;
 use WP_User;
 
 /**
