@@ -1,6 +1,8 @@
 <?php
 namespace SCUD;
 
+use WP_User;
+
 if ( ! class_exists( 'Scud_User' ) ) {
     /**
     * Create a new user role with custom meta and taxonomy
@@ -10,7 +12,7 @@ if ( ! class_exists( 'Scud_User' ) ) {
         /**
          * A string with no spaces to act as a slug or internal reference to the role tupe
          */
-        private string $role_slug = 'simple_user';
+        public string $role_slug = 'simple_user';
 
         /**
          * A string which is displayed to admin screens
