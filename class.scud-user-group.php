@@ -1,6 +1,9 @@
 <?php
 namespace SCUD;
 
+use Scud_User;
+use WP_User;
+
 /**
  * Create new user taxonomies
  */
@@ -91,8 +94,58 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
 
         /**
          * Display the taxonomy fields on user profiles
+         *
+         * @param WP_User $user The user to show in the admin editor
+         * @return void The HTML code to disply the user field gets passed to the profile
          */
-        public function display_user_taxonomy_fields(): void {}
+        public function display_user_taxonomy_fields( WP_User $user ): void {
+            // Return early if the current user does not have the abiility to edit other users
+            if ( ! current_user_can( 'edit_users' ) ) {
+                return;
+            }
+
+            // Avoid displaying the custom taxonomy fields for other user roles
+            $scud_user = new Scud_User();
+            if ( ! in_array( $scud_user->role_slug, $user->roles ) ) {
+                return;
+            }
+			?>
+            <h3><?php esc_html_e( 'User Groups' ); ?></h3>
+            <div class="user-taxonomy-wrapper">
+				<?php
+				wp_nonce_field( 'user-groups', 'user-groups' );
+
+				$user_taxonomies = get_object_taxonomies( 'user', 'objects' );
+                if ( ! empty( $user_taxonomies ) ) :
+				    foreach ( $user_taxonomies as $taxonomy ) {
+                    ?>
+                        <table class="form-table user-profile-taxonomy">
+                            <tr>
+                                <th>
+                                    <label for="new-tag-user_tag_<?php echo esc_attr( $taxonomy->name ); ?>">
+										<?php echo esc_html( $taxonomy->labels->singular_name ); ?>
+                                    </label>
+                                </th>
+                                <td>
+									<?php
+									wp_terms_checklist(
+										$user->ID,
+										array(
+											'taxonomy' => $taxonomy->name,
+											'walker'   => 'Walker_Category_Checklist',
+										)
+									);
+									?>
+                                </td>
+                            </tr>
+                        </table>
+					<?php
+				    } // Taxonomies
+                endif; // Taxonomies exist
+				?>
+            </div>
+			<?php
+        }
 
         /**
          * Update terms saved to a user on profile update
