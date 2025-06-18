@@ -12,6 +12,8 @@ Text Domain: wporg
 Domain Path: /languages
 */
 
+use SCUD\Scud_User;
+
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 define( 'SCUD_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
@@ -35,7 +37,7 @@ function scud_activation(): void {
 }
 
 // Initialize custom user profile fields and meta
-add_action( 'current_screen', 'scud_load_user_role_meta' );
+add_action( 'current_screen', 'scud_load_user' );
 
 /**
  * Conditionally load user meta fields based on the screen
@@ -43,7 +45,8 @@ add_action( 'current_screen', 'scud_load_user_role_meta' );
  * @param none;
  * @return void;
  */
-function scud_load_user_role_meta(): void {
+function scud_load_user(): void {
+
     $scud_user = new Scud_User();
     $screen = get_current_screen();
 
