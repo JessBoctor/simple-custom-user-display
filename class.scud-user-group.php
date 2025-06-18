@@ -88,5 +88,24 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
             // Clear up related tags and taxonomies, when a user is deleted.
             add_action( 'deleted_user', array( $this, 'update_user_assigned_to_terms' ) );
         }
+
+        /**
+         * Display the taxonomy fields on user profiles
+         */
+        public function display_user_taxonomy_fields(): void {}
+
+        /**
+         * Update terms saved to a user on profile update
+         */
+        public function save_user_taxonomy_terms(): void {
+            return;
+        }
+
+        /**
+         * Clear up related tags and taxonomies when a user is deleted
+         */
+        public function update_user_assigned_to_terms(): void {
+            return;
+        }
     }
 }
