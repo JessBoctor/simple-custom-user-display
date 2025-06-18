@@ -126,12 +126,9 @@ if ( ! class_exists( 'Scud_User' ) ) {
                 return;
             }
 
-            $fields_not_in_post = [];
             foreach ( $this->meta_fields as $field_slug => $field_label ) {
                 if ( array_key_exists( 'scud_user_' . $field_slug, $_POST ) ) {
                     update_user_meta( $user_id, 'scud_user_' . $field_slug, $_POST['scud_user_' . $field_slug ] );
-                } else {
-                    $fields_not_in_post[] = $field_slug;
                 }
             }
         }
