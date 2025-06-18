@@ -42,7 +42,11 @@ function scud_activation(): void {
 add_action( 'current_screen', 'scud_load_user' );
 
 /**
- * Conditionally load user meta fields based on the screen
+ * Conditionally load user fields based on the screen
+ *
+ * We need to load two sets of fields
+ * - Meta Data
+ * - Taxonomies
  *
  * @param none;
  * @return void;
@@ -50,6 +54,7 @@ add_action( 'current_screen', 'scud_load_user' );
 function scud_load_user(): void {
 
     $scud_user = new Scud_User();
+    $scud_groups = new Scud_Groups();
     $screen = get_current_screen();
 
     if ( ! $screen ) {
@@ -62,6 +67,7 @@ function scud_load_user(): void {
         case 'profile':
         case 'user-edit':
             $scud_user->user_profile_hooks();
+            $scud_groups->user_profile_hooks();
             break;
         default:
             break;

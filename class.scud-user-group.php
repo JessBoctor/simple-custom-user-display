@@ -68,5 +68,21 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
             add_submenu_page( 'users.php', 'User Group One', 'First User Groups', 'edit_users', 'edit-tags.php?taxonomy=group_1' );
             add_submenu_page( 'users.php', 'User Group Two', 'Second User Groups', 'edit_users', 'edit-tags.php?taxonomy=group_2' );
         }
+
+        /**
+         * Update user taxonomies in the profile page
+         */
+        public function user_profile_hooks() {
+            // Show on User Profiles.
+            add_action( 'show_user_profile', array( $this, 'user_profile' ) );
+            add_action( 'edit_user_profile', array( $this, 'user_profile' ) );
+
+            // Update on Save
+            add_action( 'personal_options_update', array( $this, 'save_taxonomy_terms' ) );
+            add_action( 'edit_user_profile_update', array( $this, 'save_taxonomy_terms' ) );
+
+            // Clear up related tags and taxonomies, when a user is deleted.
+            add_action( 'deleted_user', array( $this, 'update_user_list' ) );
+        }
     }
 }
