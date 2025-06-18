@@ -55,5 +55,18 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
                 )
             );
         }
+
+        /**
+         * Add a menu screen for each taxonomy
+         * This allows you to manage terms
+         * You need to create on new menu (e.g. call add_submenu_page) for each taxonomy which is registered
+         *
+         * @param none
+         * @return void
+         */
+        public function add_user_groups_to_menu(): void {
+            add_submenu_page( 'users.php', 'User Group One', 'First User Groups', 'edit_users', 'edit-tags.php?taxonomy=group_1' );
+            add_submenu_page( 'users.php', 'User Group Two', 'Second User Groups', 'edit_users', 'edit-tags.php?taxonomy=group_2' );
+        }
     }
 }
