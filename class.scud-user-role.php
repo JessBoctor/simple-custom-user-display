@@ -12,7 +12,7 @@ if ( ! class_exists( 'Scud_User' ) ) {
         /**
          * A string with no spaces to act as a slug or internal reference to the role tupe
          */
-        public string $role_slug = 'simple_user';
+        static string $role_slug = 'simple_user';
 
         /**
          * A string which is displayed to admin screens
@@ -55,7 +55,7 @@ if ( ! class_exists( 'Scud_User' ) ) {
          * @return void
          */
         public function add_user_role(): void {
-            add_role( $this->role_slug, $this->role_display_name, $this->capabilities );
+            add_role( self::$role_slug, $this->role_display_name, $this->capabilities );
         }
 
         /**
@@ -86,7 +86,7 @@ if ( ! class_exists( 'Scud_User' ) ) {
         public function display_user_profile_fields( WP_User $user ): void {
 
             // Avoid displaying the custom meta fields for other user roles
-            if ( ! in_array( $this->role_slug, $user->roles ) ) {
+            if ( ! in_array( self::$role_slug, $user->roles ) ) {
                 return;
             }
 

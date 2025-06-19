@@ -107,8 +107,7 @@ if ( ! class_exists( 'Scud_Groups' ) ) {
             }
 
             // Avoid displaying the custom taxonomy fields for other user roles
-            $scud_user = new Scud_User();
-            if ( ! in_array( $scud_user->role_slug, $user->roles ) ) {
+            if ( ! in_array( Scud_User::$role_slug, $user->roles ) ) {
                 return;
             }
 			?>
