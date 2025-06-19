@@ -13,12 +13,14 @@ Domain Path: /languages
 */
 
 use SCUD\Scud_User;
+use SCUD\Scud_Groups;
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 define( 'SCUD_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
 
 require_once SCUD_PLUGIN_DIR . 'class.scud-user-role.php';
+require_once SCUD_PLUGIN_DIR . 'class.scud-user-group.php';
 
 // Register the new User Role
 register_activation_hook( __FILE__, 'scud_activation' );
@@ -40,7 +42,11 @@ function scud_activation(): void {
 add_action( 'current_screen', 'scud_load_user' );
 
 /**
- * Conditionally load user meta fields based on the screen
+ * Conditionally load user fields based on the screen
+ *
+ * We need to load two sets of fields
+ * - Meta Data
+ * - Taxonomies
  *
  * @param none;
  * @return void;
@@ -48,6 +54,7 @@ add_action( 'current_screen', 'scud_load_user' );
 function scud_load_user(): void {
 
     $scud_user = new Scud_User();
+    $scud_groups = new Scud_Groups();
     $screen = get_current_screen();
 
     if ( ! $screen ) {
@@ -60,8 +67,21 @@ function scud_load_user(): void {
         case 'profile':
         case 'user-edit':
             $scud_user->user_profile_hooks();
+            $scud_groups->user_profile_hooks();
             break;
         default:
             break;
         }
+}
+
+// Register & Load the new user group taxonomies
+add_action( 'init', 'scud_load_user_groups' );
+
+// Load the taxonomies in the admin menu
+function scud_load_user_groups() {
+    // Register taxonomies
+    Scud_Groups::register_taxonomies();
+
+    // Load admin screens
+    Scud_Groups::add_user_groups_to_menu();
 }

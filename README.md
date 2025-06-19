@@ -15,12 +15,13 @@ You can read more about the context here: https://jessboctor.com/2025/06/12/maki
 
 ## What this plugin is not:
 - A WYSIWYG editor for creating new user roles or custom display layouts
+- A fully translation ready plugin (sorry, my use case doesn't need it!)
 
 # The to-do list
 - [x] Create custom user roles
 - [x] Create custom user profile fields
 - [x] Make it possible to save the user metadata
-- [ ] Create custom user taxonomies
+- [x] Create custom user taxonomies
 - [ ] Query the user tables for the group member data
 - [ ] Display the user information in a DataView list
 - [ ] Make certain metadata available to be filterable within the DataView list
