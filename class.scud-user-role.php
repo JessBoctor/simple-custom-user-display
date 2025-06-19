@@ -42,8 +42,8 @@ if ( ! class_exists( 'Scud_User' ) ) {
          * ]
          */
         static array $meta_fields = [
-            'slug_1' => 'Slug 1',
-            'slug_2' => 'Slug 2',
+            'scud_user_slug_1' => 'Slug 1',
+            'scud_user_slug_2' => 'Slug 2',
         ];
 
         /**
@@ -98,12 +98,12 @@ if ( ! class_exists( 'Scud_User' ) ) {
             <table class="form-table">
                 <?php foreach ( self::$meta_fields as $field_slug => $field_label ):
                     // Before we display the profile fields, retrieve the fields from the WP_User object
-                    $saved_meta = $user->get( 'scud_user_' . $field_slug );
+                    $saved_meta = $user->get( $field_slug );
                     ?>
                         <tr>
-                            <th><label for="scud_user_<?php echo $field_slug; ?>"><?php echo $field_label; ?></label></th>
+                            <th><label for="<?php echo $field_slug; ?>"><?php echo $field_label; ?></label></th>
                             <td>
-                                <input type="text" name="scud_user_<?php echo $field_slug; ?>" id="scud_user_<?php echo $field_slug; ?>" value="<?php echo esc_attr( $saved_meta ); ?>" />
+                                <input type="text" name="<?php echo $field_slug; ?>" id="<?php echo $field_slug; ?>" value="<?php echo esc_attr( $saved_meta ); ?>" />
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -127,8 +127,8 @@ if ( ! class_exists( 'Scud_User' ) ) {
             }
 
             foreach ( self::$meta_fields as $field_slug => $field_label ) {
-                if ( array_key_exists( 'scud_user_' . $field_slug, $_POST ) ) {
-                    update_user_meta( $user_id, 'scud_user_' . $field_slug, $_POST['scud_user_' . $field_slug ] );
+                if ( array_key_exists( $field_slug, $_POST ) ) {
+                    update_user_meta( $user_id, $field_slug, $_POST[ $field_slug ] );
                 }
             }
         }
