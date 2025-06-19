@@ -41,7 +41,7 @@ if ( ! class_exists( 'Scud_User' ) ) {
          *    'meta_slug' => 'meta_label',
          * ]
          */
-        private array $meta_fields = [
+        static array $meta_fields = [
             'slug_1' => 'Slug 1',
             'slug_2' => 'Slug 2',
         ];
@@ -96,7 +96,7 @@ if ( ! class_exists( 'Scud_User' ) ) {
             <h3><?php echo $this->meta_fields_heading; ?></h3>
 
             <table class="form-table">
-                <?php foreach ( $this->meta_fields as $field_slug => $field_label ):
+                <?php foreach ( self::$meta_fields as $field_slug => $field_label ):
                     // Before we display the profile fields, retrieve the fields from the WP_User object
                     $saved_meta = $user->get( 'scud_user_' . $field_slug );
                     ?>
@@ -126,7 +126,7 @@ if ( ! class_exists( 'Scud_User' ) ) {
                 return;
             }
 
-            foreach ( $this->meta_fields as $field_slug => $field_label ) {
+            foreach ( self::$meta_fields as $field_slug => $field_label ) {
                 if ( array_key_exists( 'scud_user_' . $field_slug, $_POST ) ) {
                     update_user_meta( $user_id, 'scud_user_' . $field_slug, $_POST['scud_user_' . $field_slug ] );
                 }
