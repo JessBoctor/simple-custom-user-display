@@ -14,13 +14,15 @@ Domain Path: /languages
 
 use SCUD\Scud_User;
 use SCUD\Scud_Groups;
+use SCUD\Scud_User_Query;
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-define( 'SCUD_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
+define( 'SCUD_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 require_once SCUD_PLUGIN_DIR . 'class.scud-user-role.php';
 require_once SCUD_PLUGIN_DIR . 'class.scud-user-group.php';
+require_once SCUD_PLUGIN_DIR . 'class.scud-user-query.php';
 
 // Register the new User Role
 register_activation_hook( __FILE__, 'scud_activation' );
