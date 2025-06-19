@@ -55,11 +55,15 @@ if ( ! class_exists( 'Scud_User_Query' ) ) {
 
                 // Fetch the user taxonomy terms
                 $user_taxonomies = [];
+                foreach ( Scud_Groups::$scud_taxonomies as $taxonomy_slug => $labels ) {
+                    $terms = get_the_terms( $user_id, $taxonomy_slug );
+                    if ( ! empty( $terms ) ) {
+                        $user_taxonomies[ $taxonomy_slug ] = $terms;
+                    }
+                }
 
                 $scud_userdata[ $user_id ] = array_merge( $user_meta, $user_taxonomies );
             }
-
-            write_log( $scud_userdata );
 
             return $scud_userdata;
         }
