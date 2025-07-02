@@ -1,0 +1,4 @@
+/** Display checklist as blocks rather than bulleted list */
+.user-profile-taxonomy tbody tr td li {
+    display: block;
+}
