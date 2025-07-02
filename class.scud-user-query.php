@@ -65,6 +65,8 @@ if ( ! class_exists( 'Scud_User_Query' ) ) {
                 $scud_userdata[ $user_id ] = array_merge( $user_meta, $user_taxonomies );
             }
 
+            write_log( $scud_userdata );
+
             return $scud_userdata;
         }
     }
